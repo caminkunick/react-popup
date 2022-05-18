@@ -7,5 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "caminkunick",
-  "license": "ISC"
+  "license": "ISC",
+  "peerDependencies": {
+    "@mui/material": "^5.8.0",
+    "@fortawesome/react-fontawesome": "^0.1.18",
+    "@fortawesome/pro-duotone-svg-icons": "^6.1.1",
+    "@fortawesome/fontawesome-svg-core": "^6.1.1"
+  }
 }
