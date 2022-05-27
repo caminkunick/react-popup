@@ -88,11 +88,15 @@ export const PopupProvider = (props: React.HTMLAttributes<HTMLDivElement>) => {
             </Typography>
             {state.type === "prompt" ? (
               <TextField
+                autoFocus
                 label={state.text}
                 fullWidth
                 value={value}
                 onChange={handleChangeValue}
                 sx={{ mt: 2 }}
+                onKeyDown={({ key }) =>
+                  key === "Enter" && value && handleConfirm()
+                }
               />
             ) : (
               <Typography variant="body2" color="textSecondary">
