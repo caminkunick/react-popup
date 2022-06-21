@@ -26,7 +26,13 @@ library.add(fad, far);
 
 const timeout: number = 250;
 
-export const PopupProvider = (props: React.HTMLAttributes<HTMLDivElement>) => {
+export type PopupTranslateKey = "confirm" | "remove" | "cancel" | "close";
+export type PopupTranslate = Record<PopupTranslateKey, string>;
+
+export const PopupProvider = ({
+  trans,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & { trans?: PopupTranslate }) => {
   const [state, setState] = React.useState<PopupState>({ open: false });
   const [value, setValue] = React.useState<string>("");
 
@@ -111,18 +117,22 @@ export const PopupProvider = (props: React.HTMLAttributes<HTMLDivElement>) => {
                   return (
                     <React.Fragment>
                       <ButtonStyled variant="contained" onClick={handleConfirm}>
-                        Confirm
+                        {trans?.confirm || "Confirm"}
                       </ButtonStyled>
-                      <ButtonStyled onClick={handleAbort}>Cancel</ButtonStyled>
+                      <ButtonStyled onClick={handleAbort}>
+                        {trans?.cancel || "Cancel"}
+                      </ButtonStyled>
                     </React.Fragment>
                   );
                 case "prompt":
                   return (
                     <React.Fragment>
                       <ButtonStyled variant="contained" onClick={handleConfirm}>
-                        Confirm
+                        {trans?.confirm || "Confirm"}
                       </ButtonStyled>
-                      <ButtonStyled onClick={handleAbort}>Cancel</ButtonStyled>
+                      <ButtonStyled onClick={handleAbort}>
+                        {trans?.cancel || "Cancel"}
+                      </ButtonStyled>
                     </React.Fragment>
                   );
                 case "remove":
@@ -133,14 +143,18 @@ export const PopupProvider = (props: React.HTMLAttributes<HTMLDivElement>) => {
                         onClick={handleConfirm}
                         color="error"
                       >
-                        Remove
+                        {trans?.remove || "Remove"}
                       </ButtonStyled>
-                      <ButtonStyled onClick={handleAbort}>Cancel</ButtonStyled>
+                      <ButtonStyled onClick={handleAbort}>
+                        {trans?.cancel || "Cancel"}
+                      </ButtonStyled>
                     </React.Fragment>
                   );
                 default:
                   return (
-                    <ButtonStyled onClick={handleAbort}>Close</ButtonStyled>
+                    <ButtonStyled onClick={handleAbort}>
+                      {trans?.close || "Close"}
+                    </ButtonStyled>
                   );
               }
             })(state.type)}
