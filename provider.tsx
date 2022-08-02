@@ -8,7 +8,7 @@ import {
   PopupState,
   PopupType,
 } from "./context";
-import { library } from "@fortawesome/fontawesome-svg-core";
+import { IconPack, library } from "@fortawesome/fontawesome-svg-core";
 import { fad } from "@fortawesome/pro-duotone-svg-icons";
 import { far } from "@fortawesome/pro-regular-svg-icons";
 import {
@@ -22,7 +22,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DialogStyled } from "./dialog.styles";
 import { ButtonStyled } from "./button.styled";
 
-library.add(fad, far);
+library.add(fad as IconPack, far as IconPack);
 
 const timeout: number = 250;
 
