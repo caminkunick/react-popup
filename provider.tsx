@@ -89,7 +89,7 @@ export const PopupProvider = ({
             {state.icon && (
               <FontAwesomeIcon size="2x" icon={["far", state.icon]} />
             )}
-            <Typography variant="h6" fontWeight={"bold"} sx={{ mt: 2 }}>
+            <Typography variant="h6" fontWeight={"bold"} sx={{ mt: 2, mb: 1 }}>
               {state.title}
             </Typography>
             {state.type === "prompt" ? (
@@ -105,7 +105,12 @@ export const PopupProvider = ({
                 }
               />
             ) : (
-              <Typography variant="body2" color="textSecondary">
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                textAlign="center"
+                sx={{ px: 1 }}
+              >
                 {state.text}
               </Typography>
             )}
