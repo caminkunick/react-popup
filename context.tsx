@@ -1,4 +1,4 @@
-import {IconName} from "@fortawesome/fontawesome-svg-core";
+import { IconName } from "@fortawesome/fontawesome-svg-core";
 import * as React from "react";
 
 export type PopupType = "alert" | "confirm" | "prompt" | "remove";
@@ -6,18 +6,18 @@ export type PopupConfirm = (value?: string) => void;
 export interface Popup {
   title: string;
   text: string;
-  icon: IconName
+  icon: IconName;
   onConfirm: PopupConfirm;
   onAbort?: PopupConfirm;
 }
 export type PopupState = {
   [key in keyof Popup]?: Popup[key];
 } & {
-  open: boolean
+  open: boolean;
   type?: PopupType;
 };
 export type PopupAlert = Omit<Popup, "onConfirm">;
-export type PopupPrompt = Popup & { defaultValue?: string }
+export type PopupPrompt = Popup & { defaultValue?: string };
 
 export interface PopupFunc {
   alert: (options: PopupAlert) => void;
@@ -26,8 +26,16 @@ export interface PopupFunc {
   remove: (options: Popup) => void;
 }
 
+export type PopupCallbackData = {
+  alert?: PopupAlert;
+  confirm?: Popup;
+  prompt?: PopupPrompt;
+  remove?: Popup;
+};
+
 export const PopupContext = React.createContext<{
   Popup: PopupFunc;
+  PopupCallback: (type: PopupType) => (data: PopupCallbackData) => void;
 }>({
   Popup: {
     alert: () => {},
@@ -35,6 +43,7 @@ export const PopupContext = React.createContext<{
     prompt: () => {},
     remove: () => {},
   },
+  PopupCallback: () => () => {},
 });
 
 export const usePopup = () => React.useContext(PopupContext);

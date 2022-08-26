@@ -2,6 +2,7 @@ import * as React from "react";
 import {
   Popup,
   PopupAlert,
+  PopupCallbackData,
   PopupContext,
   PopupFunc,
   PopupPrompt,
@@ -49,6 +50,39 @@ export const PopupProvider = ({
       setState({ ...options, type: "remove", open: true }),
   };
 
+  const PopupCallback = React.useCallback(
+    (type: "alert" | "confirm" | "prompt" | "remove") =>
+      (data: PopupCallbackData) => {
+        switch (type) {
+          case "alert":
+            if (data.alert) {
+              setState({ ...data.alert, type: "alert", open: true });
+            }
+            return;
+          case "confirm":
+            if (data.confirm) {
+              setState({ ...data.confirm, type: "confirm", open: true });
+            }
+            return;
+          case "prompt":
+            if (data.prompt) {
+              const { defaultValue, ...options } = data.prompt;
+              setState({ ...options, type: "prompt", open: true });
+              setValue(defaultValue || "");
+            }
+            return;
+          case "remove":
+            if (data.remove) {
+              setState({ ...data.remove, type: "remove", open: true });
+            }
+            return;
+          default:
+            throw new Error("Invalid type");
+        }
+      },
+    []
+  );
+
   const handleChangeValue = ({
     target: { value },
   }: React.ChangeEvent<HTMLInputElement>) => setValue(value);
@@ -74,7 +108,7 @@ export const PopupProvider = ({
   const handleClose = () => setState((s) => ({ ...s, open: false }));
 
   return (
-    <PopupContext.Provider value={{ Popup }}>
+    <PopupContext.Provider value={{ Popup, PopupCallback }}>
       <div id="popup-provider" {...props} />
       <DialogStyled open={state.open} onClose={handleAbort}>
         <DialogContent>
